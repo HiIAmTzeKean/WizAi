@@ -12,10 +12,10 @@ class Profit_and_Loss():
     
     def restore_orignal_columns(self) -> None:
         self.pl_df["Description"] = self.df_original["Description"].values
-        self.pl_df["Contact"] = self.df_original["Contact"].values
+        self.pl_df["Contact"] = self .df_original["Contact"].values
     
     def clean_string(string:str) -> str:
-        return string.lower().replace(",","").replace(".","")
+        return string.lower()
     
     def clean_customer_code(string:str) -> str:
         return string.lstrip("0")
@@ -113,6 +113,12 @@ class Profit_and_Loss():
                 # key subset of description
                 # return client name from list
                 return self.entity_key_dict[key]
+            
+            # check if client name in desciption
+            client_name = self.entity_key_dict[key][0]
+            client_name = Profit_and_Loss.clean_string(client_name)
+            if client_name in description_field:
+                return self.entity_key_dict[key]
         # Test all churned item
         for key in self.churn_dict:
             if key in description_field:
@@ -166,10 +172,13 @@ class Profit_and_Loss():
            self.pl_df,
            delimiter =",", 
            fmt ='%s')
+        
     def save_to_excel(self, filename) -> None:
         self.pl_df.to_excel(filename)
     
     def save_dict_mapping(self) -> None:
+        """Saves dict in class to csv. Used for checking purpose
+        """
         import csv
         with open("entitymap.csv", 'w') as f:  # You will need 'wb' mode in Python 2.x
             w = csv.DictWriter(f, self.entity_key_dict.keys())
@@ -183,5 +192,11 @@ class Profit_and_Loss():
         self.save_to_excel("compiled.xlsx")
         # Note that description and contact is not preserved
 
-t = Profit_and_Loss()
-t.start()
+if __name__ == "__main__":
+    print("####################### Ignore all message here #######################")
+    t = Profit_and_Loss()
+    t.start()
+    print("####################### All Done #######################")
+    print("LOG: Finished processing file")
+    input("press ENTER to exit")
+    
