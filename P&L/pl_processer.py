@@ -137,7 +137,7 @@ class Profit_and_Loss():
             # if there exist a reference number
             if not pd.isnull(row["Reference"]):
                 # get the first number
-                customer_code:str = row["Reference"].split("-")[0]
+                customer_code:str = str(row["Reference"]).split("-")[0]
                 customer_code = Profit_and_Loss.clean_customer_code(customer_code)
                 # check number against the client list
                 client_name = self.find_client_name_by_code(customer_code)
