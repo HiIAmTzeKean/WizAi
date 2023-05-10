@@ -134,16 +134,6 @@ class Profit_and_Loss():
                 continue
 
             found:bool = False
-            # if there exist a contact
-            if not pd.isnull(row["Contact"]):
-                client_name, customer_code = self.find_client_name_by_entity_name(row["Contact"])
-                if client_name:
-                    # self.pl_df.iloc[index]["Client name"] = client_name
-                    # row["Client name"] = client_name
-                    self.pl_df.loc[self.pl_df["Contact"]==row["Contact"], "Client name"] = client_name
-                    self.pl_df.loc[self.pl_df["Contact"]==row["Contact"], "Client code"] = customer_code
-                    continue
-
             # if there exist a reference number
             if not pd.isnull(row["Reference"]):
                 # get the first number
@@ -156,6 +146,16 @@ class Profit_and_Loss():
                     self.pl_df.loc[self.pl_df["Reference"]==row["Reference"], "Client code"] = customer_code
                     continue
                 
+            # if there exist a contact
+            if not pd.isnull(row["Contact"]):
+                client_name, customer_code = self.find_client_name_by_entity_name(row["Contact"])
+                if client_name:
+                    # self.pl_df.iloc[index]["Client name"] = client_name
+                    # row["Client name"] = client_name
+                    self.pl_df.loc[self.pl_df["Contact"]==row["Contact"], "Client name"] = client_name
+                    self.pl_df.loc[self.pl_df["Contact"]==row["Contact"], "Client code"] = customer_code
+                    continue
+
             # if all fails
             # then for each valid xero entity name
             # check if it exists within the description

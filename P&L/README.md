@@ -18,6 +18,7 @@ Ensure that "client.xlsx" file is in the same directory. "compiled.xlsx" will be
 ## Program
 
 Python 3.10
+- https://www.python.org/downloads/release/python-31011/
 
 ## Required packages
 
